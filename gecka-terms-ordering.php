@@ -3,8 +3,8 @@
  * Plugin Name: Gecka Terms Ordering
  * Plugin URI: http://gecka-apps.com/wordpress-plugins/terms-ordering/
  * Description: Order your categories, tags or any other taxonomy of your Wordpress website
- * Version: 1.0-beta2
- * Author: Gecka
+ * Version: 1.0-beta3
+ * Author: Gecka / Stmy
  * Author URI: http://gecka.nc
  * Text Domain: gecka-terms-ordering
  * Domain Path: /languages
@@ -344,12 +344,13 @@ class Gecka_Terms_Ordering {
 			$args['menu_order'] = 'ASC';
 		}
 
-		$order = "ORDER BY CAST(tm.meta_value AS SIGNED) " . $args['menu_order'];
+		$order = "ORDER BY CAST(tm.meta_value AS SIGNED) ";
 
 		if ( $clauses['orderby'] ) {
-			$clauses['orderby'] = str_replace( 'ORDER BY', $order . ',', $clauses['orderby'] );
+			$clauses['orderby'] = str_replace( 'ORDER BY', $order . $args['menu_order'] .',', $clauses['orderby'] );
 		} else {
 			$clauses['orderby'] = $order;
+			$clauses['order'] = $args['menu_order'];
 		}
 
 		return $clauses;
